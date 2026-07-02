@@ -1,64 +1,100 @@
-import Image from "next/image";
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_36%),linear-gradient(135deg,_#0f172a_0%,_#111827_45%,_#030712_100%)] text-white">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-6 sm:px-10 lg:px-12">
+        <header className="flex items-center justify-between rounded-full border border-white/10 bg-white/5 px-5 py-3 backdrop-blur-xl">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/80">
+              LinkShortener
+            </p>
+            <p className="text-sm text-white/70">Clerk authentication is live</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Show when="signed-out">
+              <SignInButton mode="modal">
+                <button className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/15">
+                  Sign in
+                </button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="rounded-full bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300">
+                  Sign up
+                </button>
+              </SignUpButton>
+            </Show>
+            <Show when="signed-in">
+              <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/10 px-3 py-1.5">
+                <span className="text-sm text-white/75">Account</span>
+                <UserButton afterSignOutUrl="/" />
+              </div>
+            </Show>
+          </div>
+        </header>
+
+        <section className="flex flex-1 items-center py-14 sm:py-20">
+          <div className="grid w-full gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+            <div className="max-w-2xl">
+              <p className="mb-4 inline-flex items-center rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-100">
+                Secure auth for your short-link app
+              </p>
+              <h1 className="text-5xl font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl">
+                Sign in, sign up, and manage your account from the homepage.
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+                Clerk is wired into the app router, the auth proxy is configured,
+                and the landing page now surfaces the controls a first-time user
+                needs to create an account.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3 text-sm text-slate-200/90">
+                <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2">
+                  Next.js App Router
+                </div>
+                <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2">
+                  ClerkProvider in layout
+                </div>
+                <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2">
+                  Proxy matcher verified
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/8 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl sm:p-8">
+              <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-6">
+                <p className="text-sm uppercase tracking-[0.24em] text-cyan-200/70">
+                  Auth panel
+                </p>
+                <h2 className="mt-3 text-2xl font-semibold text-white">
+                  Get started in one click
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-slate-300">
+                  Sign in or create a new account to unlock protected routes.
+                </p>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <Show when="signed-out">
+                    <SignInButton mode="modal">
+                      <button className="inline-flex h-11 items-center justify-center rounded-full border border-white/15 px-5 text-sm font-medium text-white transition hover:bg-white/10">
+                        Open sign in
+                      </button>
+                    </SignInButton>
+                    <SignUpButton mode="modal">
+                      <button className="inline-flex h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300">
+                        Create account
+                      </button>
+                    </SignUpButton>
+                  </Show>
+                  <Show when="signed-in">
+                    <div className="flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-100">
+                      <span className="h-2.5 w-2.5 rounded-full bg-emerald-300" />
+                      Signed in and ready to use
+                    </div>
+                  </Show>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
