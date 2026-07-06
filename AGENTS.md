@@ -30,6 +30,8 @@ If a change is backend-only and does not touch auth flow or user-facing UI, keep
 
 ## Critical Next.js Rule
 This project uses Next.js 16, not legacy Next.js behavior.
+Never use `middleware.ts` in this repository. It is deprecated for the Next.js version used here.
+Always implement request interception and route protection in `proxy.ts`.
 Before writing framework-specific code, review local framework docs in `node_modules/next/dist/docs/` when behavior is uncertain.
 
 ## Instruction Precedence
